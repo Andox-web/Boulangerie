@@ -1,0 +1,82 @@
+:root {
+    --color-bg: #fff8e1; 
+    --color-sidebar-hover: #a67a4c; /* Couleur pain */
+    --color-sidebar: #c89f64; /* Variation pain foncée */ 
+    --color-header-footer: #d78f51; 
+    --color-text: #4e4e4e; 
+    --color-text-light: #ffffff; 
+    --color-error: #f32c04;
+    --color-success:#a6ff00;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid var(--color-text-light);
+}
+table th {
+    background-color: var(--color-header-footer);
+    color: var(--color-text-light);
+}
+.total-section {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.total-section span {
+    color: var(--color-success);
+}
+.header-section {
+    background-color: var(--color-header-footer);
+    padding: 20px;
+    color: var(--color-text-light);
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+.header-section h1 {
+    margin: 0;
+}
+.btn-action, .btn-back, .btn-confirm {
+    display: inline-block;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Boutons d'action (+/-) */
+.btn-action {
+    background-color: var(--color-primary); /* Couleur principale */
+    border: 1px solid var(--color-primary-dark);
+}
+
+.btn-action:hover {
+    background-color: var(--color-primary-dark);
+}
+
+/* Bouton de confirmation */
+.btn-confirm {
+    background-color: var(--color-success); /* Couleur pour succès */
+    border: 1px solid var(--color-success-dark);
+}
+
+.btn-confirm:hover {
+    background-color: var(--color-success-dark);
+}
+
+/* Bouton retour */
+.btn-back {
+    background-color: var(--color-secondary); /* Couleur secondaire */
+    border: 1px solid var(--color-secondary-dark);
+}
+
+.btn-back:hover {
+    background-color: var(--color-secondary-dark);
+}
