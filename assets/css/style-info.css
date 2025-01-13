@@ -1,0 +1,38 @@
+:root {
+    --color-bg: #121212; /* Fond noir profond */
+    --color-sidebar: #212121; /* Sidebar gris foncé */
+    --color-sidebar-hover: #424242; /* Hover pour la sidebar gris clair */
+    --color-header-footer: #1c1c1c; /* Header et footer noir-gris */
+    --color-text: #e1e1e1; /* Texte principal clair */
+    --color-text-light: #ffffff; /* Texte clair en blanc */
+    --color-error: #f32c04; /* Couleur pour les erreurs */
+    --color-success: #a6ff00; /* Couleur pour les succès */
+}
+
+main {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: var(--color-sidebar);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+main h2, main h3 {
+    color: var(--color-text-light);
+    margin-bottom: 10px;
+}
+
+main p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+main ul {
+    list-style-type: square;
+    padding-left: 20px;
+}
+
+main ul li {
+    margin: 5px 0;
+}
