@@ -4,7 +4,7 @@ set SRC_DIR=src\main\java
 set WEBAPP_DIR=src\main\webapp
 set BUILD_DIR=build
 set LIB_DIR=lib
-set TOMCAT_HOME=D:\logiciel\tomcat
+set TOMCAT_HOME=E:\logiciel\tomcat
 set RESOURCES_DIR=src\main\resources
 set ASSETS_DIR=assets
 

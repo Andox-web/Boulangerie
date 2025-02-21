@@ -9,6 +9,9 @@
                 %>
                     <li><a href="<%=request.getContextPath()%>/admin/utilisateur">Dashboard</a></li>
                     <li><a href="<%=request.getContextPath()%>/admin/vente">vente</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/commission">Commission et Vente</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/vente/filtre">filtre vente</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/recommendation">Recommandation</a></li>
                     <li>
                         <a class="list">Fabrication <span class="dots-vertical"></span></a>
                         <div class="submenu">

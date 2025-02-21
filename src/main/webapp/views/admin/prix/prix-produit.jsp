@@ -32,6 +32,13 @@
                 }
             %>
         </select>
+        <label for="dateDebut">Date de début :</label>
+        <input type="datetime-local" id="dateDebut" name="dateDebut" 
+               value="<%= request.getParameter("dateDebut") != null ? request.getParameter("dateDebut") : "" %>"><br>
+
+        <label for="dateFin">Date de fin :</label>
+        <input type="datetime-local" id="dateFin" name="dateFin" 
+               value="<%= request.getParameter("dateFin") != null ? request.getParameter("dateFin") : "" %>"><br>
         <button type="submit">Filtrer</button>
     </form>
 
@@ -55,7 +62,8 @@
 
         <label for="prix">Prix :</label>
         <input type="number" id="prix" name="prix" min="0" step="0.01" required><br>
-
+        <label for="datePrix">Date du Prix :</label>
+        <input type="datetime-local" id="datePrix" name="datePrixStr"><br>
         <button type="submit">Ajouter</button>
     </form>
 

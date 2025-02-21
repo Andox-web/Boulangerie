@@ -12,7 +12,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import mg.itu.model.vente.DetailVente;
-import mg.itu.model.Produit;
 
 @Repository
 public interface DetailVenteRepository extends JpaRepository<DetailVente, Long> {

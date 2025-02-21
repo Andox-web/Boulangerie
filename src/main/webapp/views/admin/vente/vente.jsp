@@ -1,8 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="mg.itu.model.auth.Utilisateur" %>
 <%@ page import="mg.itu.model.Produit" %>
-<%@ page import="mg.itu.model.vente.Vente" %>
-<%@ page import="mg.itu.model.vente.DetailVente" %>
+<%@ page import="mg.itu.model.vente.*" %>
 <%@ page import="mg.itu.model.categorie.Categorie" %>
 <%@ page import="mg.itu.model.parfum.Parfum" %>
 <%@ page import="java.util.stream.Collectors" %>
@@ -16,9 +15,17 @@
 <body>
     <h1>Ajouter Vente</h1>
     <form action="<%=request.getContextPath()%>/admin/vente/ajouter" method="post">
-        <label for="utilisateur">Utilisateur :</label>
+        <label for="vendeurs">Vendeurs :</label>
+        <select name="idVendeur" id="vendeurs" >
+            <option value="">Selectionnez un vendeurs </option>
+            <% List<Vendeur> vendeurs = (List<Vendeur>) request.getAttribute("vendeurs"); 
+               for (Vendeur vendeur : vendeurs) { %>
+                <option value="<%= vendeur.getId() %>"><%= vendeur.getNom() %></option>
+            <% } %>
+        </select>
+        <label for="utilisateur">Client :</label>
         <select name="utilisateur" id="utilisateur" >
-            <option value="">Selectionnez un utilisateur </option>
+            <option value="">Selectionnez un Client </option>
             <% List<Utilisateur> utilisateurs = (List<Utilisateur>) request.getAttribute("utilisateurs"); 
                for (Utilisateur utilisateur : utilisateurs) { %>
                 <option value="<%= utilisateur.getId() %>"><%= utilisateur.getNom() %></option>
@@ -36,7 +43,8 @@
                 </div>
             <% } %>
         </fieldset>
-        
+        <label for="date">date</label>
+        <input type="datetime-local" name="dateVenteStr">
         <button type="submit">Ajouter</button>
         <%
             String error = (String) request.getAttribute("error");
@@ -86,6 +94,7 @@
             <tr>
                 <th>ID</th>
                 <th>Utilisateur</th>
+                <th>Vendeur</th>
                 <th>Total</th>
                 <th>Date de Vente</th>
                 <th>Details de la Vente</th>
@@ -97,6 +106,7 @@
                 <tr>
                     <td><%= vente.getId() %></td>
                     <td><%= vente.getUtilisateur()!=null?vente.getUtilisateur().getNom():" " %></td>
+                    <td><%= vente.getVendeur().getNom() %></td>
                     <td><%= vente.getTotal() %> </td>
                     <td><%= vente.getDateVente() %></td>
                     <td>

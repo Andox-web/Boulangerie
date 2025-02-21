@@ -148,7 +148,7 @@
                 '#69f0ae', '#ff9100', '#2979ff', '#ff4081', 
                 '#76ff03', '#ffea00'
             ];
-            const labels = Object.keys(data);
+            const labels = Object.keys(data).reverse();
             const products = {};
             labels.forEach(date => {
                 Object.keys(data[date]).forEach(product => {
@@ -181,7 +181,7 @@
                 '#ff3d00', '#651fff', '#ff1744', '#00e5ff', 
                 '#d500f9', '#ffd740'
             ];
-            const labels = Object.keys(data);
+            const labels = Object.keys(data).reverse();
             const products = {};
             labels.forEach(date => {
                 Object.keys(data[date]).forEach(product => {
@@ -197,12 +197,12 @@
                 data: products[product].slice(-100), // Limit to last 100 points
                 itemStyle: { color: colors[index % colors.length] }
             }));
-            series.push({
-                name: 'Total',
-                type: 'line',
-                data: data.totalRevenue.slice(-100), // Limit to last 100 points
-                itemStyle: { color: '#ff8a65' }
-            });
+            // series.push({
+            //     name: 'Total',
+            //     type: 'line',
+            //     data: data.totalRevenue.slice(-100), // Limit to last 100 points
+            //     itemStyle: { color: '#ff8a65' }
+            // });
             revenueChart.setOption({
                 title: { text: 'Chiffre d\'Affaires', textStyle: { color: '#ffffff' } },
                 tooltip: { trigger: 'axis', textStyle: { color: '#121212' } },

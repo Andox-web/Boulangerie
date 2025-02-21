@@ -10,18 +10,25 @@ import jakarta.transaction.Transactional;
 import mg.itu.model.Produit;
 import mg.itu.model.auth.Utilisateur;
 import mg.itu.model.stock.StockProduit;
+import mg.itu.model.vente.CommissionVente;
 import mg.itu.model.vente.DetailVente;
+import mg.itu.model.vente.Vendeur;
 import mg.itu.model.vente.Vente;
+import mg.itu.repository.CommissionVenteRepository;
 import mg.itu.repository.DetailVenteRepository;
 import mg.itu.repository.ProduitRepository;
 import mg.itu.repository.StockProduitRepository;
 import mg.itu.repository.UtilisateurRepository;
+import mg.itu.repository.VendeurRepository;
 import mg.itu.repository.VenteRepository;
 
 @Service
 public class VenteService {
     @Autowired
     private VenteRepository venteRepository;
+
+    @Autowired 
+    private VendeurRepository vendeurRepository;
     
     @Autowired
     private DetailVenteRepository detailVenteRepository;
@@ -37,6 +44,9 @@ public class VenteService {
 
     @Autowired
     private ProduitRepository produitRepository;
+
+    @Autowired
+    private CommissionVenteRepository commissionVenteRepository;
 
     public Vente creerVente(Utilisateur utilisateur) {
         Vente vente = new Vente();
@@ -79,7 +89,10 @@ public class VenteService {
         if (insufficientProducts.length() > 0) {
             throw new RuntimeException("Produits insuffisants: " + insufficientProducts.toString());
         }
-
+        CommissionVente commissionVente = getCommissionVente(vente);
+        if (commissionVente!=null) {
+            commissionVenteRepository.save(commissionVente);
+        }
         venteRepository.saveAndFlush(vente);
         detailVenteRepository.saveAll(vente.getDetailVentes());
         stockProduitRepository.saveAll(stockProduits);
@@ -87,8 +100,9 @@ public class VenteService {
     public List<Vente> findAll() {
         return venteRepository.findAll();
     }
-    public void ajouterVente(Long utilisateur, List<Long> produits, List<Double> quantites, LocalDateTime dateVente) {
+    public void ajouterVente(Long utilisateur, List<Long> produits, List<Double> quantites, LocalDateTime dateVente, Long idVendeur) {
         Utilisateur user=null;
+        Vendeur vendeur = vendeurRepository.findById(idVendeur).orElseThrow(() -> new RuntimeException("Vendeur non trouvee"));
         if(utilisateur!=null){
             user = utilisateurRepository.findById(utilisateur).orElse(null);
             if (user == null) {
@@ -112,10 +126,12 @@ public class VenteService {
             }
             addVente(produit, quantites.get(i).doubleValue(), vente);
         }
-        
+        vente.setVendeur(vendeur);
         vente.setDateVente(dateVente);
-        confirmVente(vente);        
+        confirmVente(vente);     
+
     }
+
     public List<Vente> filtreVentes(Long categorie, Long parfum) {
         List<Vente> ventes = venteRepository.findAll();
         List<Vente> filteredVentes = new ArrayList<>();
@@ -147,5 +163,18 @@ public class VenteService {
     }
     public List<Vente> findAllByDateRange(String dateDebut, String dateFin) {
         return venteRepository.findAllByDateRange(dateDebut, dateFin);
+    }
+
+    public CommissionVente getCommissionVente(Vente vente) 
+    {
+        if (vente.getTotal()<200000) {
+            return null;
+        }
+        CommissionVente commissionVente = new CommissionVente();
+        commissionVente.setVendeur(vente.getVendeur());
+        commissionVente.setDateCommissionVente(vente.getDateVente());
+        double commissionValue = commissionVenteRepository.commissionValue().orElse(0.05);
+        commissionVente.setMontant(vente.getTotal() * commissionValue);
+        return commissionVente;
     }
 }

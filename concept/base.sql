@@ -140,9 +140,35 @@ CREATE TABLE fabrication (
     dateFabrication TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE Sexe(
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(255)
+);
+
+CREATE TABLE vendeur(
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(255),
+    numTel VARCHAR(255),
+    idSexe INTEGER NOT NULL REFERENCES Sexe(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE commission (
+    id SERIAL PRIMARY KEY,
+    valeur NUMERIC,
+    dateCommission TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE commissionVente (
+    id SERIAL PRIMARY KEY,
+    montant NUMERIC,
+    idVendeur INTEGER REFERENCES vendeur(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    dateCommissionVente TIMESTAMP
+);
+
 CREATE TABLE vente (
     id SERIAL PRIMARY KEY,
     idUtilisateur INTEGER REFERENCES utilisateur(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    idVendeur INTEGER REFERENCES vendeur(id) ON DELETE CASCADE ON UPDATE CASCADE,
     total NUMERIC NOT NULL,
     dateVente TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -160,6 +186,13 @@ CREATE TABLE achatIngrediant (
     idIngrediant INTEGER NOT NULL REFERENCES ingrediant(id) ON DELETE CASCADE ON UPDATE CASCADE,
     quantite NUMERIC NOT NULL,
     total NUMERIC NOT NULL
+);
+
+CREATE TABLE recommendation (
+    id SERIAL PRIMARY KEY,
+    idProduit INTEGER NOT NULL REFERENCES produit(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    dateDebut TIMESTAMP,
+    dateFin TIMESTAMP
 );
 
 CREATE OR REPLACE VIEW v_produits_prix_recents AS
@@ -180,6 +213,18 @@ CREATE OR REPLACE VIEW v_produits_prix_recents AS
             WHERE pp2.idProduit = p.id
             AND pp2.datePrix <= NOW()
         );
+
+--Inserer les commissions
+INSERT INTO commission (valeur) VALUES (0.05);
+
+--Inserer les sexe
+INSERT INTO sexe (id,nom) VALUES (1,'homme'),(2,'femme');
+
+--Inserer les vendeurs
+INSERT INTO vendeur (nom, numTel, idSexe) VALUES ('Gerard', '034000000',1);
+INSERT INTO vendeur (nom, numTel, idSexe) VALUES ('Louise', '033000000',2);
+INSERT INTO vendeur (nom, numTel, idSexe) VALUES ('Claudette', '033000000',2);
+INSERT INTO vendeur (nom, numTel, idSexe) VALUES ('Bob', '032000000',1)
         
 -- Insérer des types de catégories
 INSERT INTO typeCategorie (nom) VALUES ('produit'), ('ingrediant');
@@ -245,9 +290,9 @@ VALUES
 -- Insérer des transactions de stock pour produits
 INSERT INTO stockProduit (idProduit, entree, sortie, raison)
 VALUES 
-(1, 100, 10, 'Production quotidienne'),
-(2, 50, 5, 'Production quotidienne'),
-(3, 50, 8, 'Production quotidienne');
+(1, 200, 10, 'Production quotidienne'),
+(2, 200, 5, 'Production quotidienne'),
+(3, 200, 8, 'Production quotidienne');
 
 -- Insérer des transactions de stock pour ingrédients
 INSERT INTO stockIngrediant (idIngrediant, entree, sortie, raison)
@@ -259,9 +304,9 @@ VALUES
 -- Insérer des prix pour produits
 INSERT INTO prixProduit (idProduit, prix)
 VALUES 
-(1, 1.20), -- Baguette à 1.20 €
-(2, 1.50), -- Croissant à 1.50 €
-(3, 1.80); -- Pain au Chocolat à 1.80 €
+(1, 100000.0), -- Baguette à 1.20 €
+(2, 200000.0), -- Croissant à 1.50 €
+(3, 250000.0); -- Pain au Chocolat à 1.80 €
 
 -- Insérer des prix pour ingrédients
 INSERT INTO prixIngrediant (idIngrediant, prix)

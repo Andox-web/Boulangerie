@@ -26,6 +26,11 @@ public class Vente {
     @JoinColumn(name = "idUtilisateur", nullable = true)
     private Utilisateur utilisateur;
 
+    @ManyToOne
+    @JoinColumn(name = "idVendeur", nullable = true)
+    private Vendeur vendeur;
+
+
     @Column(nullable = false)
     private Double total = 0.0;
 
@@ -117,4 +122,13 @@ public class Vente {
         this.dateVente = dateVente;
     }
 
+    public Vendeur getVendeur() {
+        return vendeur;
+    }
+
+    public void setVendeur(Vendeur vendeur) {
+        this.vendeur = vendeur;
+    }
+
+    
 }

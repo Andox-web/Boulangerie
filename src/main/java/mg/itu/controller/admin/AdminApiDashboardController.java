@@ -1,17 +1,12 @@
 package mg.itu.controller.admin;
 
 import mg.itu.annotation.auth.RoleRequired;
-import mg.itu.model.Produit;
 import mg.itu.repository.DetailVenteRepository;
 import mg.itu.repository.StockIngrediantRepository;
 import mg.itu.repository.StockProduitRepository;
-import mg.itu.util.DateUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
